@@ -2,7 +2,9 @@ import * as React from 'react';
 import './style.css';
 
 export default function App() {
-  const [jokeList, setJokeList] = React.useState([]);
+  const [jokeList, setJokeList] = React.useState(
+    JSON.parse(localStorage.getItem('jokeList')) || []
+  );
   const [likesCount, setLikesCount] = React.useState(0);
   const getJokesData = async () => {
     const jokesData = await fetch('https://icanhazdadjoke.com/', {
@@ -17,12 +19,9 @@ export default function App() {
   };
   React.useEffect(() => {
     getJokesData();
-    console.log('callinggg');
   }, []);
   return (
     <div>
-      {/* <h1>Hello StackBlitz!</h1>
-      <p>{joke}</p> */}
       <button onClick={getJokesData}>getJoke</button>
       {jokeList &&
         jokeList.map((joke, index) => {
